@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrollable Image</title>
+    <style>
+        .scroll-container {
+            width: 300px;
+            height: 300px;
+            overflow-x: scroll;
+            white-space: nowrap;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .scroll-content {
+            width: 200%;
+            height: 100%;
+            display: flex;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        .image-container {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-container" onscroll="updateOpacity(event)">
+        <div class="scroll-content">
+            <div class="image-container">
+                <img src="images/all-ct.jpg" alt="Image 1">
+            </div>
+            <div class="image-container">
+                <img src="images/bellabeat.png" alt="Image 2">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateOpacity(event) {
+            const scrollContainer = event.target;
+            const images = scrollContainer.querySelectorAll("img");
+
+            const containerWidth = scrollContainer.offsetWidth;
+            const scrollWidth = scrollContainer.scrollWidth;
+            const scrollLeft = scrollContainer.scrollLeft;
+
+            const opacity = Math.max(0, Math.min(1, scrollLeft / (scrollWidth - containerWidth)));
+
+            images[0].style.opacity = 1 - opacity;
+            images[1].style.opacity = opacity;
+        }
+    </script>
+</body>
+
+</html>
